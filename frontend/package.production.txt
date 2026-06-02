@@ -1,0 +1,27 @@
+react — Runtime — UI component library (JSX rendering, hooks)
+react-dom — Runtime — React DOM renderer (createRoot in main.tsx)
+react-router-dom — Runtime — Client-side routing (BrowserRouter, Routes, NavLink, Navigate, Outlet)
+@tanstack/react-query — Runtime — Server state management (data fetching, caching, mutations via useQuery/useMutation)
+zustand — Runtime — Lightweight client state management (auth store with localStorage persistence)
+zustand/middleware — Runtime — Zustand middleware (persist for auth store rehydration)
+axios — Runtime — HTTP client for backend API calls (request/response interceptors)
+sonner — Runtime — Toast notification component (Toaster provider, toast API for success/error feedback)
+react-hook-form — Runtime — Performant form state management (useForm with validation)
+@hookform/resolvers — Runtime — Zod schema resolver bridge for react-hook-form (zodResolver)
+zod — Runtime — Schema validation for partner application form fields
+
+vite — Dev — Build tool, dev server with HMR, and production bundler
+@vitejs/plugin-react — Dev — Vite plugin for React Fast Refresh and JSX transform
+@tailwindcss/vite — Dev — Vite plugin for Tailwind CSS v4 (CSS import processing + JIT compilation)
+tailwindcss — Dev — Utility-first CSS framework (used via @import "tailwindcss" in styles/index.css)
+lightningcss — Dev — CSS processor/minifier used by Tailwind v4 and Vite as the default CSS pipeline
+typescript — Dev — TypeScript compiler for type checking (tsc -b in build script)
+@types/react — Dev — TypeScript type definitions for React
+@types/react-dom — Dev — TypeScript type definitions for ReactDOM
+@types/node — Dev — Node.js type definitions (used in tsconfig.node.json for vite.config.ts)
+eslint — Dev — Linter runner (eslint . script) providing CLI and defineConfig/globalIgnores helpers
+@eslint/js — Dev — ESLint flat config presets (js.configs.recommended)
+eslint-plugin-react-hooks — Dev — ESLint rules enforcing React Hooks rules-of-hooks and exhaustive-deps
+eslint-plugin-react-refresh — Dev — ESLint rules for React Fast Refresh compatibility
+typescript-eslint — Dev — TypeScript-aware ESLint config and rules (tseslint.configs.recommended)
+globals — Dev — ESLint globals definitions (globals.browser for browser environment)

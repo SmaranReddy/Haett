@@ -1,0 +1,16 @@
+express — Runtime — Backend API framework (HTTP server, routing, middleware pipeline)
+cors — Runtime — Cross-origin resource sharing middleware for API endpoints
+dotenv — Runtime — Loads environment variables from .env into process.env
+@prisma/client — Runtime — Type-safe database ORM client generated from Prisma schema
+bcryptjs — Runtime — Password hashing and comparison for user authentication
+jsonwebtoken — Runtime — JWT creation and verification for auth tokens
+zod — Runtime — Runtime schema validation for request payloads and environment config
+
+typescript — Dev — TypeScript compiler for type checking and build output (tsc)
+tsx — Dev — TypeScript execution engine for dev server and seed scripts (tsx watch, tsx prisma/seed.ts)
+prisma — Dev — Prisma CLI for schema management, migrations, and client generation
+@types/express — Dev — TypeScript type definitions for Express
+@types/cors — Dev — TypeScript type definitions for CORS
+@types/bcryptjs — Dev — TypeScript type definitions for bcryptjs
+@types/jsonwebtoken — Dev — TypeScript type definitions for jsonwebtoken
+@types/node — Dev — TypeScript type definitions for Node.js runtime APIs

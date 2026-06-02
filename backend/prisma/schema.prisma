@@ -1,0 +1,74 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum ApplicationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      Role     @default(USER)
+  createdAt DateTime @default(now())
+
+  partnerApplications PartnerApplication[]
+
+  @@index([email])
+  @@index([role])
+}
+
+model PartnerApplication {
+  id              String            @id @default(uuid())
+  userId          String
+  partnerType     String
+  businessName    String
+  phone           String
+  socialLink      String?
+  audienceSize    Int               @default(0)
+  description     String?
+  status          ApplicationStatus @default(PENDING)
+  rejectionReason String?
+  appliedAt       DateTime          @default(now())
+  approvedAt      DateTime?
+
+  user         User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  discountCode DiscountCode?
+
+  @@index([userId])
+  @@index([status])
+  @@index([userId, status])
+}
+
+model DiscountCode {
+  id                 String   @id @default(uuid())
+  applicationId      String   @unique
+  code               String   @unique
+  type               String
+  value              Float
+  usageCount         Int      @default(0)
+  totalDiscountAmount Float   @default(0)
+  active             Boolean  @default(true)
+  expiresAt          DateTime?
+  createdAt          DateTime @default(now())
+
+  application PartnerApplication @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+
+  @@index([code])
+  @@index([active])
+  @@index([applicationId])
+}
