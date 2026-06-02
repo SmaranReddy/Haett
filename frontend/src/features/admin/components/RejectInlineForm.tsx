@@ -25,7 +25,7 @@ export function RejectInlineForm({ onSubmit, onCancel, isLoading }: RejectInline
   };
 
   return (
-    <div className="mt-4 space-y-3 rounded-lg border border-red-200 bg-red-50 p-4" role="dialog" aria-label="Rejection reason form">
+    <div className="mt-5 space-y-3 rounded-xl border border-red-200 bg-red-50/50 p-5" role="dialog" aria-label="Rejection reason form">
       <Textarea
         label="Rejection reason"
         placeholder="Explain why this application is being rejected (min. 10 characters)..."
@@ -39,7 +39,7 @@ export function RejectInlineForm({ onSubmit, onCancel, isLoading }: RejectInline
             : undefined
         }
       />
-      <div className="flex gap-2">
+      <div className="flex gap-3">
         <Button
           variant="danger"
           size="sm"

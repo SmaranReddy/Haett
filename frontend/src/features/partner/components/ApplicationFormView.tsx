@@ -64,12 +64,12 @@ export function ApplicationFormView({ isReapply = false, onSuccess }: Applicatio
   };
 
   return (
-    <div className="mx-auto flex min-h-screen w-full max-w-2xl flex-col items-center justify-center bg-gray-50 px-4 py-12">
-      <div className="mb-8 text-center">
+    <div className="mx-auto flex min-h-screen w-full max-w-xl flex-col items-center justify-center px-6 py-16">
+      <div className="mb-10 text-center">
         <h1 className="text-3xl font-bold tracking-tight text-gray-900">
           {isReapply ? 'Update Your Application' : 'Become a Partner'}
         </h1>
-        <p className="mt-2 text-gray-600">
+        <p className="mt-2 text-gray-500">
           {isReapply
             ? 'Submit an updated application for review'
             : `Welcome${user ? `, ${user.name}` : ''}! Fill out the form below to get started.`
@@ -85,7 +85,7 @@ export function ApplicationFormView({ isReapply = false, onSuccess }: Applicatio
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6" noValidate aria-label="Partner application form">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" noValidate aria-label="Partner application form">
             <Select
               label="Partner Type *"
               placeholder="Select your partner type"
@@ -130,14 +130,14 @@ export function ApplicationFormView({ isReapply = false, onSuccess }: Applicatio
               <Textarea
                 label="Description"
                 placeholder="Tell us about your platform and audience..."
-                className="resize-none"
+                className="resize-none min-h-[120px]"
                 rows={4}
                 error={errors.description?.message}
                 {...register('description')}
               />
               <div className="flex justify-end">
                 <span className={cn(
-                  'text-xs',
+                  'text-xs tabular-nums',
                   (descriptionValue ?? '').length > 450 ? 'text-amber-500' : 'text-gray-400',
                   (descriptionValue ?? '').length >= 500 ? 'text-red-500' : '',
                 )}>
@@ -147,7 +147,7 @@ export function ApplicationFormView({ isReapply = false, onSuccess }: Applicatio
             </div>
 
             {submitError && (
-              <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700" role="alert">
+              <div className="rounded-lg border border-red-200 bg-red-50/50 px-4 py-3 text-sm text-red-700" role="alert">
                 {submitError}
               </div>
             )}

@@ -1,8 +1,6 @@
-import { PrismaClient, Role } from "@prisma/client";
-import { hashPassword, comparePassword, generateToken } from "../utils";
+import { Role } from "@prisma/client";
+import { hashPassword, comparePassword, generateToken, prisma } from "../utils";
 import { ConflictError, UnauthorizedError } from "../utils/errors";
-
-const prisma = new PrismaClient();
 
 interface RegisterParams {
   name: string;
@@ -27,7 +25,8 @@ interface AuthResult {
 }
 
 export async function registerUser(params: RegisterParams): Promise<AuthResult> {
-  const { name, email, password } = params;
+  const { name, password } = params;
+  const email = params.email.toLowerCase();
 
   const existing = await prisma.user.findUnique({ where: { email } });
   if (existing) {
@@ -58,7 +57,8 @@ export async function registerUser(params: RegisterParams): Promise<AuthResult> 
 }
 
 export async function loginUser(params: LoginParams): Promise<AuthResult> {
-  const { email, password } = params;
+  const { password } = params;
+  const email = params.email.toLowerCase();
 
   const user = await prisma.user.findUnique({ where: { email } });
   if (!user) {

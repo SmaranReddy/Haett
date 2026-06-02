@@ -2,31 +2,31 @@ import { Skeleton } from '@/components/ui';
 
 export function AdminSkeleton() {
   return (
-    <div className="mx-auto max-w-4xl px-4 py-12">
-      <Skeleton className="mb-6 h-8 w-48" />
+    <div className="mx-auto max-w-4xl px-6 py-12 animate-fade-in">
+      <Skeleton className="mb-6 h-8 w-48 rounded-lg" />
 
-      <div className="mb-6 flex gap-1 rounded-lg bg-gray-100 p-1">
+      <div className="mb-8 flex gap-1 rounded-xl bg-surface-tertiary p-1.5">
         {Array.from({ length: 4 }).map((_, i) => (
-          <Skeleton key={i} className="h-9 flex-1 rounded-md" />
+          <Skeleton key={i} className="h-10 flex-1 rounded-lg" />
         ))}
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-5">
         {Array.from({ length: 3 }).map((_, i) => (
-          <div key={i} className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+          <div key={i} className="rounded-xl border border-gray-200/70 bg-white p-6 card-shadow">
             <div className="flex items-start justify-between">
               <div className="space-y-2">
-                <Skeleton className="h-5 w-48" />
-                <Skeleton className="h-4 w-32" />
+                <Skeleton className="h-5 w-48 rounded-lg" />
+                <Skeleton className="h-4 w-32 rounded-lg" />
               </div>
               <Skeleton className="h-5 w-20 rounded-full" />
             </div>
             <div className="mt-4 grid grid-cols-3 gap-4">
-              <Skeleton className="h-4 w-full" />
-              <Skeleton className="h-4 w-full" />
-              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-4 w-full rounded-lg" />
+              <Skeleton className="h-4 w-full rounded-lg" />
+              <Skeleton className="h-4 w-full rounded-lg" />
             </div>
-            <div className="mt-4 flex gap-2">
+            <div className="mt-5 flex gap-3">
               <Skeleton className="h-9 w-24 rounded-lg" />
               <Skeleton className="h-9 w-24 rounded-lg" />
             </div>

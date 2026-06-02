@@ -33,7 +33,7 @@ function CurrencyIcon() {
 
 export function StatsGrid({ stats }: StatsGridProps) {
   return (
-    <div className="mb-8 grid gap-4 sm:grid-cols-3">
+    <div className="mb-8 grid gap-5 sm:grid-cols-3">
       <StatCard
         label="Total Codes"
         value={String(stats.totalCodes)}

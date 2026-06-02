@@ -1,4 +1,4 @@
-import { useState, useCallback, type ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 import { useAuthStore } from '@/store/auth.store';
 import { useMyApplication, useDashboard, useAllApplications } from '@/hooks';
 import {
@@ -75,7 +75,7 @@ function ApprovedDashboard() {
   if (isLoading) return <DashboardSkeleton />;
   if (isError) {
     return (
-      <div className="mx-auto max-w-4xl px-4 py-12">
+      <div className="mx-auto max-w-4xl px-6 py-12">
         <ErrorFallback message={getApiError(error)} onRetry={() => refetch()} />
       </div>
     );
@@ -83,7 +83,7 @@ function ApprovedDashboard() {
   if (!dashboard) return null;
 
   return (
-    <div className="min-h-screen bg-gray-50 px-4 py-12">
+    <div className="min-h-screen bg-surface-secondary px-6 py-12">
       <div className="mx-auto max-w-4xl">
         <DashboardHeader partnerType={dashboard.partnerType} approvedAt={dashboard.approvedAt} />
         <StatsGrid stats={dashboard.stats} />
@@ -111,16 +111,16 @@ function AdminReviewPanel() {
   if (isLoading) return <AdminSkeleton />;
   if (isError) {
     return (
-      <div className="min-h-screen bg-gray-50 px-4 py-12">
+      <div className="min-h-screen bg-surface-secondary px-6 py-12">
         <ErrorFallback message={getApiError(error)} onRetry={() => refetch()} />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 px-4 py-12">
+    <div className="min-h-screen bg-surface-secondary px-6 py-12">
       <div className="mx-auto max-w-4xl">
-        <h1 className="mb-6 text-2xl font-bold text-gray-900">Admin Review Panel</h1>
+        <h1 className="mb-6 text-2xl font-bold tracking-tight text-gray-900">Admin Review Panel</h1>
         <AdminTabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} />
         <AdminApplicationList applications={filteredApplications} activeTab={activeTab} />
       </div>
@@ -135,7 +135,7 @@ function renderView(view: PartnerView, isReapplying: boolean, setReapplying: (v:
       return <ApplicationSkeleton />;
     case 'error':
       return (
-        <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12">
+        <div className="flex min-h-screen items-center justify-center bg-surface-secondary px-6 py-16">
           <ErrorFallback
             message={getApiError(view.error)}
             onRetry={view.onRetry}

@@ -5,6 +5,5 @@ import * as userController from "../controllers/user.controller";
 const router = Router();
 
 router.get("/me", authenticate, userController.getProfile);
-router.get("/:id", authenticate, userController.getUserById);
 
 export default router;

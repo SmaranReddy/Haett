@@ -1,7 +1,6 @@
-import { PrismaClient, ApplicationStatus } from "@prisma/client";
+import { ApplicationStatus } from "@prisma/client";
 import { ForbiddenError } from "../utils/errors";
-
-const prisma = new PrismaClient();
+import { prisma } from "../utils";
 
 export interface DashboardResponse {
   partnerType: string;

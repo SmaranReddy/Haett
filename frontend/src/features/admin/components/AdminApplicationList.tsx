@@ -13,7 +13,7 @@ export function AdminApplicationList({ applications, activeTab }: AdminApplicati
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-5">
       {applications.map((app) => (
         <ApplicationCard key={app.id} application={app} />
       ))}

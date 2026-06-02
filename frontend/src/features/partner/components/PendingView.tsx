@@ -10,10 +10,10 @@ interface PendingViewProps {
 
 export function PendingView({ application }: PendingViewProps) {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12">
+    <div className="flex min-h-screen items-center justify-center bg-surface-secondary px-6 py-16">
       <StatusCard>
         <div className="mb-6 text-center">
-          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-yellow-100">
+          <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-yellow-50 ring-1 ring-inset ring-yellow-200">
             <svg className="h-8 w-8 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
@@ -36,14 +36,14 @@ export function PendingView({ application }: PendingViewProps) {
           <InfoRow label="Applied" value={formatDate(application.appliedAt)} />
         </div>
 
-        <div className="mt-6 rounded-lg bg-brand-50 p-4">
+        <div className="mt-6 rounded-xl bg-brand-50/50 p-5 ring-1 ring-inset ring-brand-200/50">
           <p className="text-sm leading-relaxed text-brand-800">
             Thank you for your interest in our partner program. Our team is carefully
             reviewing your application and we will notify you via email once a decision
             has been made. This typically takes 1-2 business days.
           </p>
         </div>
-        <div className="mt-4 text-center">
+        <div className="mt-5 text-center">
           <p className="text-xs text-gray-400">
             Applied on {formatDate(application.appliedAt)}
           </p>

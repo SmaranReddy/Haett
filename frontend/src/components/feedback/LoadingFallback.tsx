@@ -10,7 +10,7 @@ export function LoadingFallback({ message = 'Loading...', className }: LoadingFa
   return (
     <div
       className={cn(
-        'flex flex-col items-center justify-center py-16',
+        'flex flex-col items-center justify-center py-20',
         className,
       )}
     >

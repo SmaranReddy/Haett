@@ -7,8 +7,15 @@ export function cn(...classes: (string | boolean | undefined | null)[]): string 
 
 export function getApiError(error: unknown): string {
   const axiosError = error as AxiosError<ApiError>;
-  if (axiosError.response?.data?.message) {
-    return axiosError.response.data.message;
+  if (axiosError.response?.data) {
+    const { message, errors } = axiosError.response.data;
+    if (errors && Object.keys(errors).length > 0) {
+      const fieldMessages = Object.values(errors).flat().join('. ');
+      return fieldMessages || message;
+    }
+    if (message) {
+      return message;
+    }
   }
   if (axiosError.message) {
     return axiosError.message;

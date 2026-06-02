@@ -48,13 +48,42 @@ export function useToggleDiscountCode() {
 
   return useMutation({
     mutationFn: (id: string) => adminApi.toggleDiscountCode(id),
+    onMutate: async (codeId: string) => {
+      await queryClient.cancelQueries({ queryKey: QUERY_KEYS.ALL_APPLICATIONS });
+      await queryClient.cancelQueries({ queryKey: QUERY_KEYS.DASHBOARD });
+
+      const previousApps = queryClient.getQueryData<PartnerApplication[]>(QUERY_KEYS.ALL_APPLICATIONS);
+      const previousDash = queryClient.getQueryData(QUERY_KEYS.DASHBOARD);
+
+      if (previousApps) {
+        queryClient.setQueryData<PartnerApplication[]>(
+          QUERY_KEYS.ALL_APPLICATIONS,
+          previousApps.map((app) => {
+            if (app.discountCode?.id === codeId) {
+              return {
+                ...app,
+                discountCode: { ...app.discountCode, active: !app.discountCode.active },
+              };
+            }
+            return app;
+          }),
+        );
+      }
+
+      return { previousApps, previousDash };
+    },
     onSuccess: (data: DiscountCode) => {
       toast.success(data.active ? 'Discount code activated' : 'Discount code deactivated');
+    },
+    onError: (error, _codeId, context) => {
+      if (context?.previousApps) {
+        queryClient.setQueryData(QUERY_KEYS.ALL_APPLICATIONS, context.previousApps);
+      }
+      toast.error(getApiError(error));
+    },
+    onSettled: () => {
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ALL_APPLICATIONS });
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.DASHBOARD });
-    },
-    onError: (error) => {
-      toast.error(getApiError(error));
     },
   });
 }

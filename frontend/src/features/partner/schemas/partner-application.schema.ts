@@ -1,10 +1,11 @@
 import { z } from 'zod';
 
 export const partnerTypeOptions = [
-  { value: 'individual', label: 'Individual / Sole Proprietor' },
-  { value: 'business', label: 'Business / Company' },
-  { value: 'influencer', label: 'Content Creator / Influencer' },
-  { value: 'agency', label: 'Agency / Network' },
+  { value: 'affiliate', label: 'Affiliate' },
+  { value: 'influencer', label: 'Influencer' },
+  { value: 'gym', label: 'Gym' },
+  { value: 'corporate', label: 'Corporate' },
+  { value: 'partner-associate', label: 'Partner Associate' },
 ] as const;
 
 export const partnerApplicationSchema = z.object({

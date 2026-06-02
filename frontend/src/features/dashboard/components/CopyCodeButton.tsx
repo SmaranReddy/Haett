@@ -7,7 +7,7 @@ interface CopyCodeButtonProps {
 
 export function CopyCodeButton({ code }: CopyCodeButtonProps) {
   const [copied, setCopied] = useState(false);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   useEffect(() => {
     return () => {
@@ -34,10 +34,10 @@ export function CopyCodeButton({ code }: CopyCodeButtonProps) {
 
   return (
     <Button
-      variant="ghost"
+      variant="secondary"
       size="sm"
       onClick={handleCopy}
-      className="shrink-0 gap-1.5 font-mono text-xs"
+      className="shrink-0 gap-1.5 font-mono text-xs min-w-[80px]"
       aria-label={copied ? 'Code copied' : `Copy code ${code}`}
       title={copied ? 'Copied!' : 'Copy to clipboard'}
     >

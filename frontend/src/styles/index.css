@@ -1,16 +1,39 @@
 @import "tailwindcss";
 
 @theme {
-  --color-brand-50: #f0f9ff;
-  --color-brand-100: #e0f2fe;
-  --color-brand-200: #bae6fd;
-  --color-brand-300: #7dd3fc;
-  --color-brand-400: #38bdf8;
-  --color-brand-500: #0ea5e9;
-  --color-brand-600: #0284c7;
-  --color-brand-700: #0369a1;
-  --color-brand-800: #075985;
-  --color-brand-900: #0c4a6e;
+  --color-brand-50: #eef5fc;
+  --color-brand-100: #dceefc;
+  --color-brand-200: #b0dffa;
+  --color-brand-300: #72c5f5;
+  --color-brand-400: #34a8ed;
+  --color-brand-500: #0d96d8;
+  --color-brand-600: #0275b4;
+  --color-brand-700: #035c8c;
+  --color-brand-800: #064b74;
+  --color-brand-900: #0a3e5d;
+
+  --color-surface: #ffffff;
+  --color-surface-secondary: #f8fafc;
+  --color-surface-tertiary: #eef2f6;
+
+  --animate-fade-in: fade-in 0.5s ease-out;
+  --animate-scale-in: scale-in 0.2s ease-out;
+  --animate-slide-up: slide-up 0.3s ease-out;
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes scale-in {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  @keyframes slide-up {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 }
 
 @layer base {
@@ -24,7 +47,7 @@
   }
 
   body {
-    @apply bg-gray-50 text-gray-900;
+    @apply bg-surface-secondary text-gray-900;
   }
 
   ::selection {
@@ -46,5 +69,39 @@
 
   ::-webkit-scrollbar-thumb:hover {
     @apply bg-gray-400;
+  }
+}
+
+@layer utilities {
+  .card-border {
+    @apply border border-gray-200/90;
+  }
+
+  .card-shadow {
+    @apply shadow-md shadow-black/[0.04];
+  }
+
+  .card-shadow-hover {
+    @apply transition-shadow duration-200 hover:shadow-lg hover:shadow-black/[0.06];
+  }
+
+  .card-lift {
+    @apply transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/[0.06];
+  }
+
+  .text-body {
+    @apply text-gray-600;
+  }
+
+  .text-body-secondary {
+    @apply text-gray-500;
+  }
+
+  .surface-secondary {
+    @apply bg-surface-secondary;
+  }
+
+  .surface-tertiary {
+    @apply bg-surface-tertiary;
   }
 }

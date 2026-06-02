@@ -38,7 +38,6 @@ export function useCreateApplication() {
     mutationFn: (data: CreateApplicationRequest) => partnerApi.createApplication(data),
     onSuccess: () => {
       toast.success('Application submitted successfully');
-      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.MY_APPLICATION });
     },
     onError: (error) => {
       const message = getApiError(error);
@@ -46,6 +45,9 @@ export function useCreateApplication() {
         queryClient.invalidateQueries({ queryKey: QUERY_KEYS.MY_APPLICATION });
       }
       toast.error(message);
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.MY_APPLICATION });
     },
   });
 }
@@ -55,12 +57,32 @@ export function useReapply() {
 
   return useMutation({
     mutationFn: (data: ReapplyRequest) => partnerApi.reapply(data),
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: QUERY_KEYS.MY_APPLICATION });
+
+      const previous = queryClient.getQueryData<PartnerApplication | null>(QUERY_KEYS.MY_APPLICATION);
+
+      if (previous) {
+        queryClient.setQueryData<PartnerApplication>(QUERY_KEYS.MY_APPLICATION, {
+          ...previous,
+          status: 'PENDING',
+          rejectionReason: null,
+        });
+      }
+
+      return { previous };
+    },
     onSuccess: () => {
       toast.success('Application resubmitted successfully');
-      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.MY_APPLICATION });
     },
-    onError: (error) => {
+    onError: (error, _data, context) => {
+      if (context?.previous) {
+        queryClient.setQueryData(QUERY_KEYS.MY_APPLICATION, context.previous);
+      }
       toast.error(getApiError(error));
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.MY_APPLICATION });
     },
   });
 }

@@ -11,12 +11,12 @@ interface PageContainerProps {
 
 export function PageContainer({ title, description, actions, children, className }: PageContainerProps) {
   return (
-    <div className={cn('space-y-6', className)}>
+    <div className={cn('space-y-8', className)}>
       {(title || actions) && (
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            {title && <h1 className="text-2xl font-bold text-gray-900">{title}</h1>}
-            {description && <p className="mt-1 text-sm text-gray-500">{description}</p>}
+            {title && <h1 className="text-2xl font-bold tracking-tight text-gray-900">{title}</h1>}
+            {description && <p className="mt-1.5 text-sm text-gray-500">{description}</p>}
           </div>
           {actions && <div className="flex items-center gap-3">{actions}</div>}
         </div>

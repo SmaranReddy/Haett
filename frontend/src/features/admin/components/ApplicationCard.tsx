@@ -44,11 +44,11 @@ export const ApplicationCard = memo(function ApplicationCard({ application }: Ap
   const badge = statusBadge[application.status] || statusBadge.PENDING;
 
   return (
-    <Card padding="md">
+    <Card padding="md" className="card-lift">
       <CardContent className="p-0">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div className="min-w-0 flex-1 space-y-1">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2.5">
               <h3 className="truncate text-base font-semibold text-gray-900" title={application.businessName}>
                 {application.businessName}
               </h3>
@@ -60,45 +60,45 @@ export const ApplicationCard = memo(function ApplicationCard({ application }: Ap
           </div>
         </div>
 
-        <div className="mt-4 grid grid-cols-2 gap-x-6 gap-y-3 text-sm sm:grid-cols-3">
+        <div className="mt-5 grid grid-cols-2 gap-x-6 gap-y-3 text-sm sm:grid-cols-3">
           <div className="min-w-0">
-            <span className="text-gray-500">Applicant</span>
-            <p className="truncate font-medium text-gray-900" title={application.name}>{application.name}</p>
+            <span className="text-xs text-gray-500">Applicant</span>
+            <p className="mt-0.5 truncate font-medium text-gray-900" title={application.name}>{application.name}</p>
           </div>
           <div className="min-w-0">
-            <span className="text-gray-500">Partner Type</span>
-            <p className="truncate font-medium text-gray-900">{application.partnerType}</p>
+            <span className="text-xs text-gray-500">Partner Type</span>
+            <p className="mt-0.5 truncate font-medium text-gray-900">{application.partnerType}</p>
           </div>
           <div className="min-w-0">
-            <span className="text-gray-500">Audience</span>
-            <p className="font-medium text-gray-900">
+            <span className="text-xs text-gray-500">Audience</span>
+            <p className="mt-0.5 font-medium text-gray-900">
               {application.audienceSize.toLocaleString()}
             </p>
           </div>
           {application.socialLink && (
             <div className="col-span-full min-w-0">
-              <span className="text-gray-500">Social Link</span>
-              <p className="truncate font-medium text-gray-900" title={application.socialLink}>
+              <span className="text-xs text-gray-500">Social Link</span>
+              <p className="mt-0.5 truncate font-medium text-gray-900" title={application.socialLink}>
                 {application.socialLink}
               </p>
             </div>
           )}
           {application.description && (
             <div className="col-span-full min-w-0">
-              <span className="text-gray-500">Description</span>
-              <p className="text-gray-700 line-clamp-3">{application.description}</p>
+              <span className="text-xs text-gray-500">Description</span>
+              <p className="mt-0.5 text-gray-700 line-clamp-3 leading-relaxed">{application.description}</p>
             </div>
           )}
           {application.rejectionReason && (
             <div className="col-span-full min-w-0">
-              <span className="text-red-500">Rejection Reason</span>
-              <p className="text-gray-700">{application.rejectionReason}</p>
+              <span className="text-xs font-medium text-red-500">Rejection Reason</span>
+              <p className="mt-0.5 text-gray-700">{application.rejectionReason}</p>
             </div>
           )}
         </div>
 
         {application.status === 'PENDING' && (
-          <div className="mt-4 flex flex-wrap gap-2 border-t border-gray-100 pt-4">
+          <div className="mt-5 flex flex-wrap gap-3 border-t border-gray-100 pt-5">
             <Button
               variant="primary"
               size="sm"
@@ -128,18 +128,18 @@ export const ApplicationCard = memo(function ApplicationCard({ application }: Ap
         )}
 
         {application.status === 'APPROVED' && application.discountCode && (
-          <div className="mt-4 space-y-2 border-t border-gray-100 pt-4">
-            <p className="text-xs font-medium uppercase tracking-wide text-gray-500">
+          <div className="mt-5 space-y-3 border-t border-gray-100 pt-5">
+            <p className="text-xs font-semibold uppercase tracking-wider text-gray-500">
               Discount Code
             </p>
-            <div className="flex items-center justify-between rounded-lg bg-gray-50 px-3 py-2">
-              <div className="flex items-center gap-2">
-                <span className="font-mono text-sm font-medium text-gray-900">{application.discountCode.code}</span>
+            <div className="flex items-center justify-between rounded-xl bg-surface-secondary px-4 py-3">
+              <div className="flex items-center gap-3">
+                <span className="font-mono text-sm font-semibold text-gray-900">{application.discountCode.code}</span>
                 <Badge variant={application.discountCode.active ? 'success' : 'default'} size="sm">
                   {application.discountCode.active ? 'Active' : 'Inactive'}
                 </Badge>
                 <span className="text-xs text-gray-500">
-                  {application.discountCode.type === 'PERCENTAGE' ? `${application.discountCode.value}%` : formatCurrency(application.discountCode.value)} | {application.discountCode.usageCount} use{application.discountCode.usageCount !== 1 ? 's' : ''}
+                  {application.discountCode.type === 'PERCENTAGE' ? `${application.discountCode.value}%` : formatCurrency(application.discountCode.value)} &middot; {application.discountCode.usageCount} use{application.discountCode.usageCount !== 1 ? 's' : ''}
                 </span>
               </div>
               <Button

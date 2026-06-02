@@ -9,8 +9,9 @@ export const createApplicationSchema = z.object({
       .max(200, "Business name must be at most 200 characters"),
     phone: z
       .string()
-      .min(1, "Phone number is required")
-      .max(30, "Phone number must be at most 30 characters"),
+      .max(30, "Phone number must be at most 30 characters")
+      .optional()
+      .or(z.literal("")),
     socialLink: z
       .string()
       .url("Invalid URL")
@@ -40,8 +41,9 @@ export const reapplySchema = z.object({
       .max(200, "Business name must be at most 200 characters"),
     phone: z
       .string()
-      .min(1, "Phone number is required")
-      .max(30, "Phone number must be at most 30 characters"),
+      .max(30, "Phone number must be at most 30 characters")
+      .optional()
+      .or(z.literal("")),
     socialLink: z
       .string()
       .url("Invalid URL")

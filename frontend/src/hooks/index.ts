@@ -11,3 +11,4 @@ export {
   useRejectApplication,
   useToggleDiscountCode,
 } from './use-admin';
+export { usePlatformStats } from './use-public';

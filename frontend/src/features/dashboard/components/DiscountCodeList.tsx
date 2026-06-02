@@ -13,8 +13,8 @@ export function DiscountCodeList({ codes }: DiscountCodeListProps) {
 
   return (
     <div>
-      <h2 className="mb-4 text-lg font-semibold text-gray-900">Discount Codes</h2>
-      <div className="space-y-3">
+      <h2 className="mb-5 text-lg font-semibold tracking-tight text-gray-900">Discount Codes</h2>
+      <div className="space-y-4">
         {codes.map((code) => (
           <DiscountCodeCard key={code.id} code={code} />
         ))}

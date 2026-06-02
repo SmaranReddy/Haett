@@ -2,11 +2,11 @@ import type { HTMLAttributes } from 'react';
 import { cn } from '@/lib/utils';
 
 const variants = {
-  default: 'bg-gray-100 text-gray-700',
-  primary: 'bg-brand-100 text-brand-700',
-  success: 'bg-green-100 text-green-700',
-  warning: 'bg-yellow-100 text-yellow-700',
-  danger: 'bg-red-100 text-red-700',
+  default: 'bg-gray-100 text-gray-700 ring-1 ring-inset ring-gray-300',
+  primary: 'bg-brand-50 text-brand-800 ring-1 ring-inset ring-brand-300',
+  success: 'bg-green-50 text-green-800 ring-1 ring-inset ring-green-300',
+  warning: 'bg-yellow-50 text-yellow-800 ring-1 ring-inset ring-yellow-300',
+  danger: 'bg-red-50 text-red-800 ring-1 ring-inset ring-red-300',
 } as const;
 
 const sizes = {

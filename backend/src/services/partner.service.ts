@@ -1,13 +1,11 @@
-import { PrismaClient, ApplicationStatus } from "@prisma/client";
+import { ApplicationStatus } from "@prisma/client";
 import { BadRequestError, ConflictError, NotFoundError } from "../utils/errors";
-import { generateDiscountCode } from "../utils/discount-code";
-
-const prisma = new PrismaClient();
+import { generateDiscountCode, prisma } from "../utils";
 
 export interface CreateApplicationData {
   partnerType: string;
   businessName: string;
-  phone: string;
+  phone?: string;
   socialLink?: string;
   audienceSize?: number;
   description?: string;
@@ -68,7 +66,7 @@ export async function createApplication(
       userId,
       partnerType: data.partnerType,
       businessName: data.businessName,
-      phone: data.phone,
+      phone: data.phone ?? "",
       socialLink: data.socialLink || null,
       audienceSize: data.audienceSize ?? 0,
       description: data.description || null,
@@ -79,17 +77,37 @@ export async function createApplication(
   return application;
 }
 
-export async function getMyApplication(userId: string): Promise<ApplicationResult> {
+export async function getMyApplication(userId: string) {
   const application = await prisma.partnerApplication.findFirst({
     where: { userId },
     orderBy: { appliedAt: "desc" },
+    include: {
+      user: { select: { name: true, email: true } },
+      discountCode: true,
+    },
   });
 
   if (!application) {
     throw new NotFoundError("No application found");
   }
 
-  return application;
+  return {
+    id: application.id,
+    userId: application.userId,
+    name: application.user.name,
+    email: application.user.email,
+    partnerType: application.partnerType,
+    businessName: application.businessName,
+    phone: application.phone,
+    socialLink: application.socialLink,
+    audienceSize: application.audienceSize,
+    description: application.description,
+    status: application.status,
+    rejectionReason: application.rejectionReason,
+    appliedAt: application.appliedAt,
+    approvedAt: application.approvedAt,
+    discountCode: application.discountCode,
+  };
 }
 
 export async function getAllApplications(status?: string) {
@@ -263,13 +281,16 @@ export async function rejectApplication(
 export async function reapply(
   userId: string,
   data: CreateApplicationData
-): Promise<ApplicationResult> {
+) {
   const application = await prisma.partnerApplication.findFirst({
     where: {
       userId,
       status: ApplicationStatus.REJECTED,
     },
     orderBy: { appliedAt: "desc" },
+    include: {
+      user: { select: { name: true, email: true } },
+    },
   });
 
   if (!application) {
@@ -278,12 +299,12 @@ export async function reapply(
     );
   }
 
-  return prisma.partnerApplication.update({
+  const updated = await prisma.partnerApplication.update({
     where: { id: application.id },
     data: {
       partnerType: data.partnerType,
       businessName: data.businessName,
-      phone: data.phone,
+      phone: data.phone ?? "",
       socialLink: data.socialLink || null,
       audienceSize: data.audienceSize ?? 0,
       description: data.description || null,
@@ -291,4 +312,22 @@ export async function reapply(
       rejectionReason: null,
     },
   });
+
+  return {
+    id: updated.id,
+    userId: updated.userId,
+    name: application.user.name,
+    email: application.user.email,
+    partnerType: updated.partnerType,
+    businessName: updated.businessName,
+    phone: updated.phone,
+    socialLink: updated.socialLink,
+    audienceSize: updated.audienceSize,
+    description: updated.description,
+    status: updated.status,
+    rejectionReason: updated.rejectionReason,
+    appliedAt: updated.appliedAt,
+    approvedAt: updated.approvedAt,
+    discountCode: null,
+  };
 }

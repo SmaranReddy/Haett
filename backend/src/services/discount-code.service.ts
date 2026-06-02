@@ -1,7 +1,5 @@
-import { PrismaClient } from "@prisma/client";
 import { NotFoundError } from "../utils/errors";
-
-const prisma = new PrismaClient();
+import { prisma } from "../utils";
 
 export async function toggleDiscountCodeActive(id: string) {
   const code = await prisma.discountCode.findUnique({ where: { id } });
