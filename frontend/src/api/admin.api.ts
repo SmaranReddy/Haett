@@ -1,6 +1,13 @@
 import apiClient from './client';
 import type { ApiResponse, PartnerApplication, ApprovalResult, DiscountCode } from '@/types';
 
+export interface AdminDiscountCode extends DiscountCode {
+  application: {
+    businessName: string;
+    user: { name: string; email: string };
+  };
+}
+
 export const adminApi = {
   getAllApplications: (status?: string) => {
     const params = status ? { status } : {};
@@ -15,4 +22,7 @@ export const adminApi = {
 
   toggleDiscountCode: (id: string) =>
     apiClient.patch<ApiResponse<DiscountCode>>(`/admin/discount-codes/${id}/toggle`).then((res) => res.data.data!),
+
+  getAllDiscountCodes: () =>
+    apiClient.get<ApiResponse<AdminDiscountCode[]>>('/admin/discount-codes').then((res) => res.data.data!),
 };

@@ -2,23 +2,25 @@ import { NavLink, type NavLinkRenderProps } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { useAuthStore } from '@/store/auth.store';
 import { ROUTES } from '@/utils/constants';
-import type { ReactNode } from 'react';
+import { LayoutDashboard, FileText, Tag, Shield, X } from 'lucide-react';
 
 const partnerNav = [
-  { to: ROUTES.PARTNER_DASHBOARD, label: 'Dashboard', icon: DashboardIcon },
-  { to: ROUTES.PARTNER_APPLICATION, label: 'Application', icon: ApplicationIcon },
-  { to: ROUTES.PARTNER_CODES, label: 'Discount Codes', icon: CodesIcon },
+  { to: ROUTES.PARTNER_DASHBOARD, label: 'Dashboard', icon: LayoutDashboard },
+  { to: ROUTES.PARTNER_APPLICATION, label: 'Application', icon: FileText },
+  { to: ROUTES.PARTNER_CODES, label: 'Discount Codes', icon: Tag },
 ];
 
 const adminNav = [
-  { to: ROUTES.ADMIN_APPLICATIONS, label: 'Applications', icon: ApplicationIcon },
-  { to: ROUTES.ADMIN_CODES, label: 'Discount Codes', icon: CodesIcon },
+  { to: ROUTES.ADMIN_DASHBOARD, label: 'Dashboard', icon: Shield },
+  { to: ROUTES.ADMIN_APPLICATIONS, label: 'Applications', icon: FileText },
+  { to: ROUTES.ADMIN_CODES, label: 'Discount Codes', icon: Tag },
 ];
 
-function NavItem({ to, label, icon: Icon }: { to: string; label: string; icon: () => ReactNode }) {
+function NavItem({ to, label, icon: Icon, onClose }: { to: string; label: string; icon: React.ComponentType<{ className?: string }>; onClose?: () => void }) {
   return (
     <NavLink
       to={to}
+      onClick={onClose}
       className={({ isActive }: NavLinkRenderProps) =>
         cn(
           'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2',
@@ -30,36 +32,12 @@ function NavItem({ to, label, icon: Icon }: { to: string; label: string; icon: (
     >
       {({ isActive }: NavLinkRenderProps) => (
         <>
-          <Icon />
+          <Icon className="h-5 w-5" />
           {label}
           {isActive && <span className="sr-only">(current)</span>}
         </>
       )}
     </NavLink>
-  );
-}
-
-function DashboardIcon() {
-  return (
-    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-    </svg>
-  );
-}
-
-function ApplicationIcon() {
-  return (
-    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-    </svg>
-  );
-}
-
-function CodesIcon() {
-  return (
-    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
-    </svg>
   );
 }
 
@@ -88,18 +66,31 @@ export function AppSidebar({ isOpen, onClose }: AppSidebarProps) {
         )}
         aria-label="Sidebar"
       >
-        <div className="flex h-16 items-center gap-2.5 border-b border-gray-200 px-6">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-600 text-sm font-bold text-white">
-            P
+        <div className="flex h-16 items-center justify-between border-b border-gray-200 px-6">
+          <div className="flex items-center gap-2.5">
+            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-brand-500 to-brand-700 text-sm font-bold text-white shadow-sm">
+              P
+            </div>
+            <span className="text-base font-semibold tracking-tight text-gray-900">Partner Portal</span>
           </div>
-          <span className="text-base font-semibold text-gray-900">Partner Portal</span>
+          <button
+            onClick={onClose}
+            className="flex h-8 w-8 items-center justify-center rounded-lg text-gray-400 hover:bg-gray-100 hover:text-gray-600 lg:hidden"
+            aria-label="Close sidebar"
+          >
+            <X className="h-4 w-4" />
+          </button>
         </div>
 
         <nav className="flex-1 space-y-1 p-4" aria-label="Main navigation">
           {navItems.map((item) => (
-            <NavItem key={item.to} to={item.to} label={item.label} icon={item.icon} />
+            <NavItem key={item.to} to={item.to} label={item.label} icon={item.icon} onClose={onClose} />
           ))}
         </nav>
+
+        <div className="border-t border-gray-100 p-4">
+          <p className="text-xs text-gray-400 text-center">Partner Portal v1.0</p>
+        </div>
       </aside>
     </>
   );

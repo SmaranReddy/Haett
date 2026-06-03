@@ -10,8 +10,9 @@ interface StatusCardProps {
 export function StatusCard({ children, className }: StatusCardProps) {
   return (
     <Card
+      variant="glass-strong"
       padding="lg"
-      className={cn('mx-auto w-full max-w-lg', className)}
+      className={cn('w-full', className)}
     >
       <CardContent>{children}</CardContent>
     </Card>

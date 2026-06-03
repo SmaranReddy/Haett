@@ -1,7 +1,6 @@
 import apiClient from './client';
 
 export interface PlatformStats {
-  totalPartners: number;
   totalApprovedPartners: number;
   totalDiscountCodes: number;
   totalCodeUses: number;

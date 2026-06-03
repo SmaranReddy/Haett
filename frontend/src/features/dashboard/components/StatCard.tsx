@@ -9,8 +9,8 @@ interface StatCardProps {
 
 export const StatCard = memo(function StatCard({ label, value, icon }: StatCardProps) {
   return (
-    <Card padding="md" className="flex items-center gap-4 card-lift">
-      <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-600 ring-1 ring-inset ring-brand-200/50">
+    <Card padding="md" className="flex items-center gap-4 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/[0.06]">
+      <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-brand-50 to-brand-100 text-brand-600 ring-1 ring-inset ring-brand-200/50 shadow-sm">
         {icon}
       </span>
       <CardContent className="p-0">

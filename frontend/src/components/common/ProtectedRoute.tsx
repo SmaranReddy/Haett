@@ -1,12 +1,9 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import { useAuthStore } from '@/store/auth.store';
 import { LoadingFallback } from '@/components/feedback';
+import { ROUTES } from '@/utils/constants';
 
-interface ProtectedRouteProps {
-  requiredRole?: 'USER' | 'ADMIN';
-}
-
-export function ProtectedRoute({ requiredRole }: ProtectedRouteProps) {
+export function ProtectedRoute() {
   const { isAuthenticated, isHydrated, role } = useAuthStore();
 
   if (!isHydrated) {
@@ -14,11 +11,11 @@ export function ProtectedRoute({ requiredRole }: ProtectedRouteProps) {
   }
 
   if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to={ROUTES.PARTNER} replace />;
   }
 
-  if (requiredRole && role !== requiredRole) {
-    return <Navigate to="/dashboard" replace />;
+  if (role === 'ADMIN') {
+    return <Navigate to={ROUTES.ADMIN_DASHBOARD} replace />;
   }
 
   return <Outlet />;

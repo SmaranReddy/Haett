@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { adminApi } from '@/api';
+import { adminApi, type AdminDiscountCode } from '@/api/admin.api';
 import { getApiError } from '@/lib/utils';
 import { QUERY_KEYS } from '@/utils/constants';
 import { toast } from 'sonner';
@@ -85,5 +85,12 @@ export function useToggleDiscountCode() {
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ALL_APPLICATIONS });
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.DASHBOARD });
     },
+  });
+}
+
+export function useAllDiscountCodes() {
+  return useQuery<AdminDiscountCode[]>({
+    queryKey: QUERY_KEYS.ALL_DISCOUNT_CODES,
+    queryFn: () => adminApi.getAllDiscountCodes(),
   });
 }

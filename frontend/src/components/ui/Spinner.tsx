@@ -1,9 +1,10 @@
 import { cn } from '@/lib/utils';
+import { Loader2 } from 'lucide-react';
 
 const sizes = {
-  sm: 'h-4 w-4 border-2',
-  md: 'h-5 w-5 border-2',
-  lg: 'h-7 w-7 border-[2.5px]',
+  sm: 'h-4 w-4',
+  md: 'h-5 w-5',
+  lg: 'h-7 w-7',
 } as const;
 
 interface SpinnerProps {
@@ -13,16 +14,10 @@ interface SpinnerProps {
 
 export function Spinner({ size = 'md', className }: SpinnerProps) {
   return (
-    <div
-      className={cn(
-        'animate-spin rounded-full border-gray-200 border-t-brand-500',
-        sizes[size],
-        className,
-      )}
+    <Loader2
+      className={cn('animate-spin text-brand-500', sizes[size], className)}
       role="status"
       aria-label="Loading"
-    >
-      <span className="sr-only">Loading...</span>
-    </div>
+    />
   );
 }

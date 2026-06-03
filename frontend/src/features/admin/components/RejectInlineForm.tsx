@@ -25,7 +25,7 @@ export function RejectInlineForm({ onSubmit, onCancel, isLoading }: RejectInline
   };
 
   return (
-    <div className="mt-5 space-y-3 rounded-xl border border-red-200 bg-red-50/50 p-5" role="dialog" aria-label="Rejection reason form">
+    <div className="mt-5 space-y-3 rounded-xl border border-red-200 bg-gradient-to-br from-red-50 to-red-50/50 p-5" role="dialog" aria-label="Rejection reason form">
       <Textarea
         label="Rejection reason"
         placeholder="Explain why this application is being rejected (min. 10 characters)..."

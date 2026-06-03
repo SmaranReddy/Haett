@@ -3,6 +3,7 @@ import { cn } from '@/lib/utils';
 
 interface CardProps extends HTMLAttributes<HTMLDivElement> {
   padding?: 'none' | 'sm' | 'md' | 'lg';
+  variant?: 'default' | 'glass' | 'glass-strong';
 }
 
 const paddings = {
@@ -12,11 +13,18 @@ const paddings = {
   lg: 'p-8',
 } as const;
 
-export function Card({ className, padding = 'md', children, ...props }: CardProps) {
+const variants = {
+  default: 'bg-white card-border card-shadow',
+  glass: 'glass',
+  'glass-strong': 'glass-strong',
+} as const;
+
+export function Card({ className, padding = 'md', variant = 'default', children, ...props }: CardProps) {
   return (
     <div
       className={cn(
-        'rounded-xl bg-white card-border card-shadow transition-all duration-200',
+        'rounded-xl transition-all duration-200',
+        variants[variant],
         paddings[padding],
         className,
       )}
@@ -45,7 +53,7 @@ export function CardTitle({ className, children, ...props }: HTMLAttributes<HTML
 
 export function CardDescription({ className, children, ...props }: HTMLAttributes<HTMLParagraphElement>) {
   return (
-    <p className={cn('mt-1 text-sm text-gray-600', className)} {...props}>
+    <p className={cn('mt-1 text-sm text-gray-500', className)} {...props}>
       {children}
     </p>
   );

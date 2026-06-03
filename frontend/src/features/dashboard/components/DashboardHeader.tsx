@@ -1,3 +1,4 @@
+import { Calendar } from 'lucide-react';
 import { Badge } from '@/components/ui';
 import { formatDate } from '@/lib/utils';
 
@@ -14,7 +15,8 @@ export function DashboardHeader({ partnerType, approvedAt }: DashboardHeaderProp
         <Badge variant="primary" size="md">
           {partnerType}
         </Badge>
-        <span className="text-sm text-gray-500">
+        <span className="flex items-center gap-1.5 text-sm text-gray-500">
+          <Calendar className="h-3.5 w-3.5" />
           Approved {formatDate(approvedAt)}
         </span>
       </div>

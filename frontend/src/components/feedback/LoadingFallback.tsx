@@ -1,4 +1,4 @@
-import { Spinner } from '@/components/ui';
+import { Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface LoadingFallbackProps {
@@ -14,7 +14,7 @@ export function LoadingFallback({ message = 'Loading...', className }: LoadingFa
         className,
       )}
     >
-      <Spinner size="lg" />
+      <Loader2 className="h-8 w-8 animate-spin text-brand-500" />
       <p className="mt-4 text-sm text-gray-500">{message}</p>
     </div>
   );

@@ -1,5 +1,8 @@
 import axios from 'axios';
 import { useAuthStore } from '@/store/auth.store';
+import { queryClient } from '@/providers/query.provider';
+import { redirect } from '@/lib/navigation';
+import { ROUTES } from '@/utils/constants';
 
 const apiClient = axios.create({
   baseURL: '/api/v1',
@@ -21,6 +24,8 @@ apiClient.interceptors.response.use(
   (error) => {
     if (axios.isAxiosError(error) && error.response?.status === 401) {
       useAuthStore.getState().logout();
+      queryClient.clear();
+      redirect(ROUTES.PARTNER);
     }
     return Promise.reject(error);
   },

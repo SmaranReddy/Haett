@@ -4,10 +4,12 @@ import { ProtectedRoute, AdminRoute } from '@/components/common';
 
 import LoginPage from '@/pages/auth/LoginPage';
 import RegisterPage from '@/pages/auth/RegisterPage';
+import AdminLoginPage from '@/pages/auth/AdminLoginPage';
 import PartnerPage from '@/pages/partner/PartnerPage';
 import PartnerDashboardPage from '@/pages/partner/DashboardPage';
 import ApplicationPage from '@/pages/partner/ApplicationPage';
 import CodesPage from '@/pages/partner/CodesPage';
+import AdminDashboardPage from '@/pages/admin/AdminDashboardPage';
 import AdminApplicationsPage from '@/pages/admin/ApplicationsPage';
 import AdminDiscountCodesPage from '@/pages/admin/DiscountCodesPage';
 import NotFoundPage from '@/pages/NotFoundPage';
@@ -17,6 +19,7 @@ export function AppRoutes() {
     <Routes>
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
+      <Route path="/admin/login" element={<AdminLoginPage />} />
       <Route path="/partner" element={<PartnerPage />} />
 
       <Route element={<ProtectedRoute />}>
@@ -29,8 +32,10 @@ export function AppRoutes() {
 
       <Route element={<AdminRoute />}>
         <Route element={<AppLayout />}>
+          <Route path="/admin" element={<AdminDashboardPage />} />
           <Route path="/admin/applications" element={<AdminApplicationsPage />} />
-          <Route path="/admin/discount-codes" element={<AdminDiscountCodesPage />} />
+          <Route path="/admin/codes" element={<AdminDiscountCodesPage />} />
+          <Route path="/admin/discount-codes" element={<Navigate to="/admin/codes" replace />} />
         </Route>
       </Route>
 

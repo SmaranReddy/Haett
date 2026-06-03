@@ -1,4 +1,5 @@
 import { useState, memo } from 'react';
+import { CheckCircle, XCircle, Users, Globe, Eye, ExternalLink } from 'lucide-react';
 import {
   Card,
   CardContent,
@@ -44,7 +45,7 @@ export const ApplicationCard = memo(function ApplicationCard({ application }: Ap
   const badge = statusBadge[application.status] || statusBadge.PENDING;
 
   return (
-    <Card padding="md" className="card-lift">
+    <Card padding="md" className="transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/[0.06]">
       <CardContent className="p-0">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div className="min-w-0 flex-1 space-y-1">
@@ -62,24 +63,40 @@ export const ApplicationCard = memo(function ApplicationCard({ application }: Ap
 
         <div className="mt-5 grid grid-cols-2 gap-x-6 gap-y-3 text-sm sm:grid-cols-3">
           <div className="min-w-0">
-            <span className="text-xs text-gray-500">Applicant</span>
+            <span className="flex items-center gap-1 text-xs text-gray-500">
+              <Users className="h-3 w-3" /> Applicant
+            </span>
             <p className="mt-0.5 truncate font-medium text-gray-900" title={application.name}>{application.name}</p>
           </div>
           <div className="min-w-0">
-            <span className="text-xs text-gray-500">Partner Type</span>
-            <p className="mt-0.5 truncate font-medium text-gray-900">{application.partnerType}</p>
+            <span className="flex items-center gap-1 text-xs text-gray-500">
+              <Eye className="h-3 w-3" /> Partner Type
+            </span>
+            <p className="mt-0.5 truncate font-medium text-gray-900 capitalize">{application.partnerType}</p>
           </div>
           <div className="min-w-0">
-            <span className="text-xs text-gray-500">Audience</span>
+            <span className="flex items-center gap-1 text-xs text-gray-500">
+              <Users className="h-3 w-3" /> Audience
+            </span>
             <p className="mt-0.5 font-medium text-gray-900">
               {application.audienceSize.toLocaleString()}
             </p>
           </div>
           {application.socialLink && (
             <div className="col-span-full min-w-0">
-              <span className="text-xs text-gray-500">Social Link</span>
-              <p className="mt-0.5 truncate font-medium text-gray-900" title={application.socialLink}>
-                {application.socialLink}
+              <span className="flex items-center gap-1 text-xs text-gray-500">
+                <Globe className="h-3 w-3" /> Social Link
+              </span>
+              <p className="mt-0.5 truncate text-gray-900">
+                <a
+                  href={application.socialLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 font-medium text-brand-600 hover:text-brand-500 hover:underline"
+                >
+                  {application.socialLink}
+                  <ExternalLink className="h-3 w-3" />
+                </a>
               </p>
             </div>
           )}
@@ -106,6 +123,7 @@ export const ApplicationCard = memo(function ApplicationCard({ application }: Ap
               isLoading={approveMutation.isPending}
               disabled={approveMutation.isPending}
             >
+              <CheckCircle className="h-4 w-4 mr-1" />
               Approve
             </Button>
             <Button
@@ -114,6 +132,7 @@ export const ApplicationCard = memo(function ApplicationCard({ application }: Ap
               onClick={() => setShowReject(true)}
               disabled={rejectMutation.isPending}
             >
+              <XCircle className="h-4 w-4 mr-1" />
               Reject
             </Button>
           </div>

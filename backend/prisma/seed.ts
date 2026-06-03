@@ -7,12 +7,23 @@ const prisma = new PrismaClient();
 async function main(): Promise<void> {
   console.log("Seeding database...");
 
+  // Clean all operational data first
+  await prisma.discountCode.deleteMany({});
+  await prisma.partnerApplication.deleteMany({});
+  // Remove any users beyond the essential ones
+  await prisma.user.deleteMany({
+    where: { email: { notIn: [config.adminSeed.email, config.userSeed.email] } },
+  });
+
   const adminPassword = await hashPassword(config.adminSeed.password);
   const userPassword = await hashPassword(config.userSeed.password);
 
   const admin = await prisma.user.upsert({
     where: { email: config.adminSeed.email },
-    update: {},
+    update: {
+      password: adminPassword,
+      role: Role.ADMIN,
+    },
     create: {
       name: config.adminSeed.name,
       email: config.adminSeed.email,
@@ -25,7 +36,10 @@ async function main(): Promise<void> {
 
   const testUser = await prisma.user.upsert({
     where: { email: config.userSeed.email },
-    update: {},
+    update: {
+      password: userPassword,
+      role: Role.USER,
+    },
     create: {
       name: config.userSeed.name,
       email: config.userSeed.email,

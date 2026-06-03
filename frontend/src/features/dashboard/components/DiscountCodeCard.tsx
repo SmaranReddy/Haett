@@ -10,10 +10,10 @@ interface DiscountCodeCardProps {
 
 export const DiscountCodeCard = memo(function DiscountCodeCard({ code }: DiscountCodeCardProps) {
   return (
-    <Card padding="md" className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between card-lift">
+    <Card padding="md" className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/[0.06]">
       <div className="min-w-0 flex-1 space-y-2">
         <div className="flex items-center gap-2.5">
-          <span className="truncate font-mono text-sm font-semibold text-gray-900" title={code.code}>
+          <span className="truncate font-mono text-sm font-semibold tracking-wide text-gray-900 bg-gray-50 px-2.5 py-1 rounded-lg ring-1 ring-inset ring-gray-200" title={code.code}>
             {code.code}
           </span>
           <Badge variant={code.active ? 'success' : 'default'} size="sm">

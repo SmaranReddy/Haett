@@ -2,7 +2,6 @@ import { ApplicationStatus } from "@prisma/client";
 import { prisma } from "../utils";
 
 export interface PlatformStatsResponse {
-  totalPartners: number;
   totalApprovedPartners: number;
   totalDiscountCodes: number;
   totalCodeUses: number;
@@ -32,7 +31,6 @@ export async function getPlatformStats(): Promise<PlatformStatsResponse> {
   ]);
 
   return {
-    totalPartners: totalApprovedPartners,
     totalApprovedPartners,
     totalDiscountCodes,
     totalCodeUses: discountCodeStats._sum.usageCount ?? 0,

@@ -6,11 +6,15 @@ import {
   rejectApplicationSchema,
   toggleCodeParamsSchema,
 } from "../validations/partner.validation";
+import { loginSchema } from "../validations/auth.validation";
+import * as authController from "../controllers/auth.controller";
 import * as partnerController from "../controllers/partner.controller";
 import * as discountCodeController from "../controllers/discount-code.controller";
 import { Role } from "@prisma/client";
 
 const router = Router();
+
+router.post("/login", validate(loginSchema), authController.adminLogin);
 
 router.get(
   "/partner-applications",
@@ -33,6 +37,13 @@ router.patch(
   authorize(Role.ADMIN),
   validate(rejectApplicationSchema),
   partnerController.rejectApplication
+);
+
+router.get(
+  "/discount-codes",
+  authenticate,
+  authorize(Role.ADMIN),
+  discountCodeController.getAll
 );
 
 router.patch(

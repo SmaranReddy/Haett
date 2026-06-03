@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { authApi } from '@/api';
@@ -16,11 +16,24 @@ export function useLogin() {
     onSuccess: (result) => {
       setAuth(result.user, result.token);
       toast.success('Login successful');
-      if (result.user.role === 'ADMIN') {
-        navigate(ROUTES.ADMIN_APPLICATIONS);
-      } else {
-        navigate(ROUTES.PARTNER_DASHBOARD);
-      }
+      navigate(result.user.role === 'ADMIN' ? ROUTES.ADMIN_DASHBOARD : ROUTES.PARTNER);
+    },
+    onError: (error) => {
+      toast.error(getApiError(error));
+    },
+  });
+}
+
+export function useAdminLogin() {
+  const setAuth = useAuthStore((s) => s.setAuth);
+  const navigate = useNavigate();
+
+  return useMutation({
+    mutationFn: (data: LoginRequest) => authApi.adminLogin(data),
+    onSuccess: (result) => {
+      setAuth(result.user, result.token);
+      toast.success(`Welcome, ${result.user.name}`);
+      navigate(ROUTES.ADMIN_DASHBOARD, { replace: true });
     },
     onError: (error) => {
       toast.error(getApiError(error));
@@ -37,7 +50,7 @@ export function useRegister() {
     onSuccess: (result) => {
       setAuth(result.user, result.token);
       toast.success('Account created successfully');
-      navigate(ROUTES.PARTNER_APPLICATION);
+      navigate(result.user.role === 'ADMIN' ? ROUTES.ADMIN_DASHBOARD : ROUTES.PARTNER);
     },
     onError: (error) => {
       toast.error(getApiError(error));
@@ -48,10 +61,12 @@ export function useRegister() {
 export function useLogout() {
   const logout = useAuthStore((s) => s.logout);
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   return () => {
     logout();
-    navigate(ROUTES.LOGIN);
+    queryClient.clear();
+    navigate(ROUTES.PARTNER, { replace: true });
     toast.success('Logged out successfully');
   };
 }

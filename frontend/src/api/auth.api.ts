@@ -5,6 +5,9 @@ export const authApi = {
   login: (data: LoginRequest) =>
     apiClient.post<ApiResponse<AuthResponse>>('/auth/login', data).then((res) => res.data.data!),
 
+  adminLogin: (data: LoginRequest) =>
+    apiClient.post<ApiResponse<AuthResponse>>('/admin/login', data).then((res) => res.data.data!),
+
   register: (data: RegisterRequest) =>
     apiClient.post<ApiResponse<AuthResponse>>('/auth/register', data).then((res) => res.data.data!),
 

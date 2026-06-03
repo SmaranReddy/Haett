@@ -14,7 +14,7 @@ interface AdminTabsProps {
 
 export function AdminTabs({ tabs, activeTab, onTabChange }: AdminTabsProps) {
   return (
-    <div className="mb-8 flex gap-1 rounded-xl bg-surface-tertiary p-1.5">
+    <div className="mb-8 inline-flex gap-1 rounded-xl bg-surface-tertiary p-1.5">
       {tabs.map((tab) => (
         <button
           key={tab.key}

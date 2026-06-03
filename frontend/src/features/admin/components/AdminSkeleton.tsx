@@ -2,18 +2,18 @@ import { Skeleton } from '@/components/ui';
 
 export function AdminSkeleton() {
   return (
-    <div className="mx-auto max-w-4xl px-6 py-12 animate-fade-in">
+    <div className="mx-auto max-w-4xl px-6 py-12">
       <Skeleton className="mb-6 h-8 w-48 rounded-lg" />
 
-      <div className="mb-8 flex gap-1 rounded-xl bg-surface-tertiary p-1.5">
+      <div className="mb-8 inline-flex gap-1 rounded-xl bg-surface-tertiary p-1.5">
         {Array.from({ length: 4 }).map((_, i) => (
-          <Skeleton key={i} className="h-10 flex-1 rounded-lg" />
+          <Skeleton key={i} className="h-10 w-24 rounded-lg" />
         ))}
       </div>
 
       <div className="space-y-5">
         {Array.from({ length: 3 }).map((_, i) => (
-          <div key={i} className="rounded-xl border border-gray-200/70 bg-white p-6 card-shadow">
+          <div key={i} className="rounded-xl border border-gray-200/70 bg-white p-6 shadow-md shadow-black/[0.04]">
             <div className="flex items-start justify-between">
               <div className="space-y-2">
                 <Skeleton className="h-5 w-48 rounded-lg" />

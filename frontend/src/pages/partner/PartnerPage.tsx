@@ -1,4 +1,5 @@
 import { useState, type ReactNode } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useAuthStore } from '@/store/auth.store';
 import { useMyApplication, useDashboard, useAllApplications } from '@/hooks';
 import {
@@ -20,6 +21,7 @@ import {
   AdminSkeleton,
 } from '@/features/admin/components';
 import { ErrorFallback } from '@/components/feedback';
+import { LogoutButton } from '@/components/common';
 import { getApiError } from '@/lib/utils';
 import type { PartnerApplication } from '@/types';
 
@@ -48,7 +50,9 @@ function computeView(
   if (!isHydrated) return { type: 'loading-hydrate' };
   if (role === 'ADMIN') return { type: 'admin' };
   if (!isAuthenticated) return { type: 'visitor' };
-  if (isReapplying) return { type: 'apply' };
+  if (isReapplying && application?.status === 'REJECTED') {
+    return { type: 'apply' };
+  }
 
   if (isLoading) return { type: 'loading-application' };
   if (isError) {
@@ -128,43 +132,71 @@ function AdminReviewPanel() {
   );
 }
 
-function renderView(view: PartnerView, isReapplying: boolean, setReapplying: (v: boolean) => void): ReactNode {
-  switch (view.type) {
-    case 'loading-hydrate':
-    case 'loading-application':
-      return <ApplicationSkeleton />;
-    case 'error':
-      return (
-        <div className="flex min-h-screen items-center justify-center bg-surface-secondary px-6 py-16">
-          <ErrorFallback
-            message={getApiError(view.error)}
-            onRetry={view.onRetry}
+const pageVariants = {
+  initial: { opacity: 0, y: 12 },
+  animate: { opacity: 1, y: 0, transition: { duration: 0.3, ease: [0.25, 0.1, 0.25, 1] as const } },
+  exit: { opacity: 0, y: -12, transition: { duration: 0.2 } },
+};
+
+function renderView(
+  view: PartnerView,
+  isReapplying: boolean,
+  setReapplying: (v: boolean) => void,
+  reapplyApplication?: PartnerApplication | null,
+): ReactNode {
+  const content = (() => {
+    switch (view.type) {
+      case 'loading-hydrate':
+      case 'loading-application':
+        return <ApplicationSkeleton />;
+      case 'error':
+        return (
+          <div className="flex min-h-screen items-center justify-center bg-surface-secondary px-6 py-16">
+            <ErrorFallback
+              message={getApiError(view.error)}
+              onRetry={view.onRetry}
+            />
+          </div>
+        );
+      case 'visitor':
+        return <LandingView />;
+      case 'apply':
+        return (
+          <ApplicationFormView
+            isReapply={isReapplying}
+            onSuccess={() => setReapplying(false)}
+            existingApplication={reapplyApplication ?? undefined}
           />
-        </div>
-      );
-    case 'visitor':
-      return <LandingView />;
-    case 'apply':
-      return (
-        <ApplicationFormView
-          isReapply={isReapplying}
-          onSuccess={() => setReapplying(false)}
-        />
-      );
-    case 'pending':
-      return <PendingView application={view.application} />;
-    case 'rejected':
-      return (
-        <RejectedView
-          application={view.application}
-          onReapply={() => setReapplying(true)}
-        />
-      );
-    case 'approved':
-      return <ApprovedDashboard />;
-    case 'admin':
-      return <AdminReviewPanel />;
-  }
+        );
+      case 'pending':
+        return <PendingView application={view.application} />;
+      case 'rejected':
+        return (
+          <RejectedView
+            application={view.application}
+            onReapply={() => setReapplying(true)}
+          />
+        );
+      case 'approved':
+        return <ApprovedDashboard />;
+      case 'admin':
+        return <AdminReviewPanel />;
+    }
+  })();
+
+  return (
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={view.type}
+        variants={pageVariants}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+      >
+        {content}
+      </motion.div>
+    </AnimatePresence>
+  );
 }
 
 export default function PartnerPage() {
@@ -184,5 +216,12 @@ export default function PartnerPage() {
     isReapplying,
   );
 
-  return <>{renderView(view, isReapplying, setIsReapplying)}</>;
+  const showLogout = isAuthenticated && !['loading-hydrate', 'loading-application', 'error'].includes(view.type);
+
+  return (
+    <>
+      {showLogout && <LogoutButton />}
+      {renderView(view, isReapplying, setIsReapplying, isReapplying ? application : null)}
+    </>
+  );
 }
