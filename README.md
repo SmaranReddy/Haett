@@ -108,28 +108,110 @@ flowchart LR
 
 ## Screenshots
 
-> Create a `screenshots/` folder in the repository root and place your captured images there. Reference them in the markdown like `![Alt text](screenshots/filename.png)`.
+### Visitor Landing Page
 
-### 1. Visitor Landing Page
-*Hero section with "Apply Now" CTA, benefits grid, how-it-works steps, and live platform statistics.*
+Hero section, benefits grid, how-it-works steps, CTA buttons, and live platform statistics.
 
-### 2. Application Form
-*Partner type dropdown, business name, phone, social link, audience size, and description with 500-character counter.*
+<p align="center">
+  <img src="screenshots/landing1.png" alt="Landing Page Hero" width="700" />
+  <br/><em>Hero section with "Apply Now" CTA</em>
+</p>
 
-### 3. Pending Review State
-*Status card showing business name, partner type, application date, and "Under Review" waiting message.*
+<p align="center">
+  <img src="screenshots/landing2.png" alt="Landing Page Benefits" width="700" />
+  <br/><em>Benefits grid and how-it-works steps</em>
+</p>
 
-### 4. Rejected State
-*Red-themed view showing rejection reason from admin, application info, and "Reapply Now" button.*
+<p align="center">
+  <img src="screenshots/landing3.png" alt="Landing Page CTA" width="700" />
+  <br/><em>Platform overview and call-to-action buttons</em>
+</p>
 
-### 5. Approved Dashboard
-*Stats grid (Total Codes, Total Uses, Total Discount Given) and discount code list with copy-to-clipboard.*
+<p align="center">
+  <img src="screenshots/landing4.png" alt="Landing Page Features" width="700" />
+  <br/><em>Feature highlights and live platform statistics</em>
+</p>
 
-### 6. Admin Review Panel
-*Tab filters (All / Pending / Approved / Rejected) with dynamic counts, application cards with approve/reject actions.*
+---
 
-### 7. Discount Code Management
-*Code list with active/inactive badges, usage counts, and activate/deactivate toggle buttons.*
+### Application Form
+
+Partner application form with required fields, partner type selector, audience size, social link, and description with character counter.
+
+<p align="center">
+  <img src="screenshots/applicationform.png" alt="Application Form" width="700" />
+  <br/><em>Partner application form with validation and 500-character description counter</em>
+</p>
+
+---
+
+### Pending Review State
+
+Application submitted successfully and awaiting admin review.
+
+<p align="center">
+  <img src="screenshots/underreview.png" alt="Pending Review" width="700" />
+  <br/><em>Status card showing application under review</em>
+</p>
+
+---
+
+### Rejected State
+
+Rejected application view with rejection reason and reapply functionality.
+
+<p align="center">
+  <img src="screenshots/rejectstate.png" alt="Rejected State" width="700" />
+  <br/><em>Rejected view with admin's reason and "Reapply Now" button</em>
+</p>
+
+---
+
+### Approved Dashboard
+
+Approved partner dashboard showing analytics, discount code statistics, and partner metrics.
+
+<p align="center">
+  <img src="screenshots/approveddashboard.png" alt="Approved Dashboard" width="700" />
+  <br/><em>Dashboard with stats grid and discount code list with copy-to-clipboard</em>
+</p>
+
+---
+
+### Admin Review Panel
+
+Admin review system with filtering tabs, approval/rejection workflow, dynamic counts, and partner management actions.
+
+<p align="center">
+  <img src="screenshots/admin1.png" alt="Admin Panel Overview" width="700" />
+  <br/><em>Admin review panel with tab-based filtering</em>
+</p>
+
+<p align="center">
+  <img src="screenshots/admin2.png" alt="Admin Panel Pending" width="700" />
+  <br/><em>Pending applications with approve and reject actions</em>
+</p>
+
+<p align="center">
+  <img src="screenshots/admin3.png" alt="Admin Panel Rejection" width="700" />
+  <br/><em>Inline rejection form with reason input</em>
+</p>
+
+<p align="center">
+  <img src="screenshots/admin5.png" alt="Admin Panel Management" width="700" />
+  <br/><em>Partner management actions and dynamic status counts</em>
+</p>
+
+---
+
+### Discount Code Management
+
+Discount code activation/deactivation, usage tracking, and code management interface.
+
+<p align="center">
+  <img src="screenshots/discountmanagement.png" alt="Discount Code Management" width="700" />
+  <br/><em>Code list with active/inactive badges, usage counts, and toggle buttons</em>
+</p>
 
 ---
 
